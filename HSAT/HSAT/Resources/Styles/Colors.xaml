@@ -41,4 +41,10 @@
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
+    <LinearGradientBrush x:Key="ShellFlyoutBackground" StartPoint="0.5,0.9" EndPoint="0.5,1">
+        <GradientStopCollection>
+            <GradientStop Color="#030303" Offset="0.5" />
+            <GradientStop Color="#5f5" Offset="1.2" />
+        </GradientStopCollection>
+    </LinearGradientBrush>
 </ResourceDictionary>
