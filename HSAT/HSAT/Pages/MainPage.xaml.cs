@@ -1,12 +1,10 @@
-﻿using System.Diagnostics;
-
-namespace HSAT;
+﻿namespace HSAT.Pages;
 
 public partial class MainPage : ContentPage
 {
 	public MainPage()
 	{
-		InitializeComponent();
+        InitializeComponent();
 	}
 }
 

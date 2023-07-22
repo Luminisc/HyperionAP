@@ -52,4 +52,10 @@
 	  <PackageReference Include="Microsoft.Maui.Graphics" Version="7.0.59" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Pages\*.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

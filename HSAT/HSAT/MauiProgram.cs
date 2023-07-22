@@ -36,7 +36,11 @@ public static class MauiProgram
                 {
                     const int width = 1280;
                     const int height = 720;
-                    winuiAppWindow.MoveAndResize(new RectInt32(1920 / 2 - width / 2, 1080 / 2 - height / 2, width, height));
+                    winuiAppWindow.MoveAndResize(new RectInt32(
+                        (int)DeviceDisplay.MainDisplayInfo.Width / 2 - width / 2,
+                        (int)DeviceDisplay.MainDisplayInfo.Height / 2 - height / 2, 
+                        width, 
+                        height));
                 }
             }));
         });
