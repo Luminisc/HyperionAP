@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:HSAT"
     xmlns:pages="clr-namespace:HSAT.Pages"
+    xmlns:demoDrawing="clr-namespace:HSAT.Experiments.DemoDrawing"
     Shell.FlyoutBehavior="Flyout"
     Shell.NavBarIsVisible="False">
     <!-- MenuBarItems example -->
@@ -60,6 +61,6 @@
         Route="MainPage" />
     <ShellContent
         Title="Демо - рисование"
-        ContentTemplate="{DataTemplate pages:DemoDrawing}"
+        ContentTemplate="{DataTemplate demoDrawing:DemoDrawing}"
         Route="DemoDrawing" />
 </Shell>
