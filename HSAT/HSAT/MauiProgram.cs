@@ -2,6 +2,7 @@
 using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using Windows.Graphics;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace HSAT;
 
@@ -12,6 +13,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseSkiaSharp()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
