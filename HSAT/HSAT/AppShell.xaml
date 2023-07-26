@@ -56,7 +56,7 @@
         </DataTemplate>
     </Shell.ItemTemplate>
     <ShellContent
-        Title="Стартовая страница"
+        Title="Главная"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="MainPage" />
     <ShellContent

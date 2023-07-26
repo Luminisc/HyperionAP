@@ -5,25 +5,14 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              x:Class="HSAT.Experiments.DemoDrawing.DemoDrawing"
              Title="DemoDrawing">
-    <ContentPage.Resources>
-        <demoDrawing:DrawingSurface x:Key="drawable"/>
-    </ContentPage.Resources>
-    <VerticalStackLayout>
-        <GraphicsView x:Name="graphicsView"
-                      Drawable="{StaticResource drawable}"
-                      HeightRequest="250"
-                      WidthRequest="500"
-                      BackgroundColor="Aqua">
-            <GraphicsView.GestureRecognizers>
-                <TapGestureRecognizer Tapped="Image_Tapped"/>
-            </GraphicsView.GestureRecognizers>
-        </GraphicsView>
-        <skia:SKCanvasView x:Name="skCanvas" 
-                           PaintSurface="SKCanvasView_PaintSurface"
-                           HeightRequest="250"
-                           WidthRequest="500"
-                           BackgroundColor="Aqua"/>
-        <Button Clicked="Button_Clicked"
-                Text="Open file"/>
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
+            <Button Clicked="Button_Clicked"
+                    Text="Open file"/>
+            <skia:SKCanvasView x:Name="skCanvas" 
+                               PaintSurface="SKCanvasView_PaintSurface"
+                               HeightRequest="9000"
+                               WidthRequest="900"/>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
