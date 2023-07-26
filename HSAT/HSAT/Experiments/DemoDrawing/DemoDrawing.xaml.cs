@@ -38,7 +38,7 @@ public partial class DemoDrawing : ContentPage
                 canvas.DrawBitmap(this.bitmap, 0f, 0f);
                 return;
             }
-            
+
             var sw = new Stopwatch();
             sw.Start();
             var band = image.Dataset.GetRasterBand(image.Dataset.RasterCount / 2 + 5);
@@ -56,18 +56,25 @@ public partial class DemoDrawing : ContentPage
                 bitmap.Dispose();
                 return;
             }
-            
+
             var shortBuffer = new ushort[bandWidth * bandHeight];
             Buffer.BlockCopy(buffer, 0, shortBuffer, 0, buffer.Length);
-            for (var y = 0; y < bandHeight; y++)
+
+            var pixelsPtr = bitmap.GetPixels();
+            unsafe
             {
-                for (var x = 0; x < bandWidth; x++)
+                var unsafePtr = (uint*)pixelsPtr.ToPointer();
+                for (var y = 0; y < bandHeight; y++)
                 {
-                    int color = shortBuffer[x + y * bandWidth];
-                    var colorb = (byte)(color * 256 / ushort.MaxValue);
-                    bitmap.SetPixel(x, y, new SKColor(colorb, colorb, colorb));
+                    for (var x = 0; x < bandWidth; x++)
+                    {
+                        int color = shortBuffer[x + y * bandWidth];
+                        var colorb = (byte)(color * 256 / ushort.MaxValue);
+                        unsafePtr[x + y * bandWidth] = (uint)new SKColor(colorb, colorb, colorb);
+                    }
                 }
             }
+
             sw.Stop();
             Debug.WriteLine($"Loaded in: {sw.ElapsedMilliseconds} ms");
             this.bitmap = bitmap;
