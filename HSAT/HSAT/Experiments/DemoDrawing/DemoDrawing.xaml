@@ -18,9 +18,12 @@
                 <TapGestureRecognizer Tapped="Image_Tapped"/>
             </GraphicsView.GestureRecognizers>
         </GraphicsView>
-        <skia:SKCanvasView PaintSurface="SKCanvasView_PaintSurface"
+        <skia:SKCanvasView x:Name="skCanvas" 
+                           PaintSurface="SKCanvasView_PaintSurface"
                            HeightRequest="250"
                            WidthRequest="500"
                            BackgroundColor="Aqua"/>
+        <Button Clicked="Button_Clicked"
+                Text="Open file"/>
     </VerticalStackLayout>
 </ContentPage>
