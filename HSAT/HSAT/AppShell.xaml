@@ -2,12 +2,12 @@
     x:Class="HSAT.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:demoDrawing="clr-namespace:HSAT.Experiments.DemoDrawing"
     xmlns:local="clr-namespace:HSAT"
     xmlns:pages="clr-namespace:HSAT.Pages"
-    xmlns:demoDrawing="clr-namespace:HSAT.Experiments.DemoDrawing"
     Shell.FlyoutBehavior="Flyout"
     Shell.NavBarIsVisible="False">
-    <!-- MenuBarItems example -->
+    <!--  MenuBarItems example. Shell.NavBarIsVisible must be True  -->
     <!--<Shell.MenuBarItems>
         <MenuBarItem Text="Locations">
             <MenuFlyoutSubItem Text="Change Location">
@@ -31,7 +31,7 @@
     </Shell.MenuBarItems>-->
     <Shell.TitleView>
         <StackLayout>
-            <Label Text="{Binding Title}"/>
+            <Label Text="{Binding Title}" />
         </StackLayout>
     </Shell.TitleView>
     <!--<Shell.ToolbarItems>
@@ -44,21 +44,34 @@
     </Shell.ToolbarItems>-->
     <Shell.ItemTemplate>
         <DataTemplate x:DataType="FlyoutItem">
-            <Grid ColumnDefinitions="50,*" MinimumHeightRequest="50">
-                <Image Source="{Binding FlyoutIcon}"
-                       Margin="5"
-                       HeightRequest="50"/>
-                <Label Grid.Column="1"
-                       Text="{Binding Title}"
-                       VerticalTextAlignment="Center"/>
+            <Grid ColumnDefinitions="40,*" MinimumHeightRequest="40">
+                <Image
+                    Margin="5"
+                    HeightRequest="40"
+                    Source="{Binding FlyoutIcon}" />
+                <Label
+                    Grid.Column="1"
+                    Text="{Binding Title}"
+                    VerticalTextAlignment="Center" />
             </Grid>
         </DataTemplate>
     </Shell.ItemTemplate>
+    <Shell.MenuItemTemplate>
+        <DataTemplate x:DataType="MenuItem">
+            <Grid ColumnDefinitions="30,*" MinimumHeightRequest="30">
+                <Image
+                    Margin="5"
+                    HeightRequest="30"
+                    Source="{Binding IconImageSource}" />
+                <Label
+                    Grid.Column="1"
+                    Text="{Binding Text}"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
 
-    <MenuItem 
-        Text="Создать"
-        Clicked="CreateProject"
-        />
+    <MenuItem Clicked="CreateProject" Text="Создать" />
 
     <ShellContent
         Title="Главная"
