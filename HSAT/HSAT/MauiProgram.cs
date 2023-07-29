@@ -3,6 +3,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using Windows.Graphics;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using CommunityToolkit.Maui;
 
 namespace HSAT;
 
@@ -14,6 +15,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseSkiaSharp()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -32,7 +34,7 @@ public static class MauiProgram
                 AppWindow winuiAppWindow = AppWindow.GetFromWindowId(win32WindowsId);
                 if (winuiAppWindow.Presenter is OverlappedPresenter p)
                 {
-                    //p.Maximize();
+                    p.Maximize();
                 }
                 else
                 {

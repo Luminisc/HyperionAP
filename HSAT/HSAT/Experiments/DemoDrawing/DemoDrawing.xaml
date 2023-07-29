@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:demoDrawing="clr-namespace:HSAT.Experiments.DemoDrawing"
-             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
-             x:Class="HSAT.Experiments.DemoDrawing.DemoDrawing"
-             Title="DemoDrawing">
+<ContentPage
+    x:Class="HSAT.Experiments.DemoDrawing.DemoDrawing"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:demoDrawing="clr-namespace:HSAT.Experiments.DemoDrawing"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+    Title="DemoDrawing">
     <ScrollView>
         <VerticalStackLayout>
-            <Button Clicked="Button_Clicked"
-                    Text="Open file"/>
-            <skia:SKCanvasView x:Name="skCanvas" 
-                               PaintSurface="SKCanvasView_PaintSurface"
-                               HeightRequest="9000"
-                               WidthRequest="900"/>
+            <Button Clicked="Button_Clicked" Text="Open file" />
+            <skia:SKCanvasView
+                x:Name="skCanvas"
+                HeightRequest="2300"
+                PaintSurface="SKCanvasView_PaintSurface"
+                WidthRequest="800" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

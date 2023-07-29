@@ -1,6 +1,9 @@
 using HSAT.Core;
+using OSGeo.GDAL;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace HSAT.Experiments.DemoDrawing;
@@ -33,12 +36,12 @@ public partial class DemoDrawing : ContentPage
             canvas.Clear();
             var sw = new Stopwatch();
             sw.Start();
-            var band = Image.Dataset.GetRasterBand(Image.Dataset.RasterCount / 2 + 5);
+            var band = Image.Dataset.GetRasterBand(140);
             var bandWidth = band.XSize;
             var bandHeight = band.YSize;
             var bitmap = new SKBitmap(bandWidth, bandHeight);
             var datatype = band.DataType;
-            var buffer = new byte[bandWidth * bandHeight * sizeof(ushort)];
+            var buffer = new short[bandWidth * bandHeight];
             var readResult = band.ReadRaster(0, 0, bandWidth, bandHeight, buffer, bandWidth, bandHeight, 0, 0);
             Debug.WriteLine($"Read band in: {sw.ElapsedMilliseconds} ms");
             sw.Restart();
@@ -49,9 +52,7 @@ public partial class DemoDrawing : ContentPage
                 return;
             }
 
-            var shortBuffer = new ushort[bandWidth * bandHeight];
-            Buffer.BlockCopy(buffer, 0, shortBuffer, 0, buffer.Length);
-
+            band.ComputeStatistics(false, out var min, out var max, out var mean, out var stddev, null, null);
             var pixelsPtr = bitmap.GetPixels();
             unsafe
             {
@@ -60,8 +61,10 @@ public partial class DemoDrawing : ContentPage
                 {
                     for (var x = 0; x < bandWidth; x++)
                     {
-                        int color = shortBuffer[y * bandWidth + x];
-                        var colorb = (byte)(color * 256 / ushort.MaxValue);
+                        int color = buffer[y * bandWidth + x];
+                        if (color < 0)
+                            color = 0;
+                        var colorb = (byte)(256 * color / max);
                         unsafePtr[y * bandWidth + x] = (uint)new SKColor(colorb, colorb, colorb);
                     }
                 }

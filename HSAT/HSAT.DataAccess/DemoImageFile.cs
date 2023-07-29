@@ -15,7 +15,7 @@ namespace HSAT.Core
 
         public static DemoImageFile Load()
         {
-            var dataset = Gdal.Open(@"C:\_Datas\Git\HSAT\_HSI\moffet_field\f190802t01p00r12rdn_e_sc01_ort_img", Access.GA_ReadOnly);
+            var dataset = Gdal.Open(@"C:\_Datas\Git\HSAT\_HSI\f120507t01p00r13.tar\f120507t01p00r13rdn_a\f120507t01p00r13rdn_a_sc01_ort_img", Access.GA_ReadOnly);
 
             var image = new DemoImageFile()
             {
