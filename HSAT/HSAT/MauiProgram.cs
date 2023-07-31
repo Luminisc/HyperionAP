@@ -34,7 +34,7 @@ public static class MauiProgram
                 AppWindow winuiAppWindow = AppWindow.GetFromWindowId(win32WindowsId);
                 if (winuiAppWindow.Presenter is OverlappedPresenter p)
                 {
-                    p.Maximize();
+                    // p.Maximize();
                 }
                 else
                 {

@@ -6,14 +6,21 @@
     xmlns:demoDrawing="clr-namespace:HSAT.Experiments.DemoDrawing"
     xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
     Title="DemoDrawing">
-    <ScrollView>
-        <VerticalStackLayout>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <VerticalStackLayout Grid.Column="0">
             <Button Clicked="Button_Clicked" Text="Open file" />
-            <skia:SKCanvasView
-                x:Name="skCanvas"
-                HeightRequest="2300"
-                PaintSurface="SKCanvasView_PaintSurface"
-                WidthRequest="800" />
         </VerticalStackLayout>
-    </ScrollView>
+        <skia:SKCanvasView
+            x:Name="skCanvas"
+            Grid.Column="1"
+            PaintSurface="SKCanvasView_PaintSurface">
+            <skia:SKCanvasView.GestureRecognizers>
+                <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
+            </skia:SKCanvasView.GestureRecognizers>
+        </skia:SKCanvasView>
+    </Grid>
 </ContentPage>

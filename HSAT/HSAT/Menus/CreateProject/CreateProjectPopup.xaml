@@ -1,0 +1,15 @@
+<!--  TODO: Fix popup styles, move them to styles  -->
+<mtk:Popup
+    x:Class="HSAT.Menus.CreateProject.CreateProjectPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mtk="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    Color="{AppThemeBinding Light={StaticResource White},
+                            Dark={StaticResource Gray950}}">
+    <VerticalStackLayout HeightRequest="400" WidthRequest="600">
+        <Label
+            HorizontalOptions="Center"
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" />
+    </VerticalStackLayout>
+</mtk:Popup>
