@@ -14,8 +14,8 @@ public partial class DemoDrawing : ContentPage
     DemoImageFile Image { get; set; }
     SKBitmap Bitmap { get; set; }
     float Scale { get; set; } = 1.0f;
-    SKPoint Translate { get; set; } = new SKPoint(0, 0);
-    SKPoint PrevTranslate { get; set; } = new SKPoint(0, 0);
+    SKPoint CurrentTranslation { get; set; } = new SKPoint(0, 0);
+    SKPoint PrevTranslation { get; set; } = new SKPoint(0, 0);
 
     public DemoDrawing()
     {
@@ -79,12 +79,12 @@ public partial class DemoDrawing : ContentPage
 
             int resizedWidth = (int)(this.Bitmap.Width * Scale),
                 resizedHeight = (int)(this.Bitmap.Height * Scale);
-                
 
-            using (var resizedBitmap = this.Bitmap.Resize(new SKImageInfo(resizedWidth, resizedHeight), SKFilterQuality.None))
-            {
-                canvas.DrawBitmap(resizedBitmap, Translate);
-            }
+
+            using var resizedBitmap = this.Bitmap.Resize(new SKImageInfo(resizedWidth, resizedHeight), SKFilterQuality.None);
+
+            var translation = CurrentTranslation + new SKPoint((width - resizedWidth) / 2, (height - resizedHeight) / 2);
+            canvas.DrawBitmap(resizedBitmap, translation);
         }
     }
 
@@ -112,13 +112,13 @@ public partial class DemoDrawing : ContentPage
         switch (e.StatusType)
         {
             case GestureStatus.Running:
-                Translate = PrevTranslate + new SKPoint((float)e.TotalX, (float)e.TotalY);
+                CurrentTranslation = PrevTranslation + new SKPoint((float)e.TotalX, (float)e.TotalY);
                 break;
             case GestureStatus.Completed:
-                PrevTranslate = Translate;
+                PrevTranslation = CurrentTranslation;
                 break;
             case GestureStatus.Canceled:
-                Translate = PrevTranslate;
+                CurrentTranslation = PrevTranslation;
                 break;
         }
         skCanvas.InvalidateSurface();
