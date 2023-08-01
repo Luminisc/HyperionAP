@@ -1,10 +1,7 @@
 using HSAT.Core;
-using Microsoft.Maui.Platform;
 using OSGeo.GDAL;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace HSAT.Experiments.DemoDrawing;
@@ -13,7 +10,7 @@ public partial class DemoDrawing : ContentPage
 {
     DemoImageFile Image { get; set; }
     SKBitmap Bitmap { get; set; }
-    float Scale { get; set; } = 1.0f;
+    float PictureScale { get; set; } = 1.0f;
     SKPoint CurrentTranslation { get; set; } = new SKPoint(0, 0);
     SKPoint PrevTranslation { get; set; } = new SKPoint(0, 0);
 
@@ -77,8 +74,8 @@ public partial class DemoDrawing : ContentPage
                 this.Bitmap = bitmap;
             }
 
-            int resizedWidth = (int)(this.Bitmap.Width * Scale),
-                resizedHeight = (int)(this.Bitmap.Height * Scale);
+            int resizedWidth = (int)(this.Bitmap.Width * PictureScale),
+                resizedHeight = (int)(this.Bitmap.Height * PictureScale);
 
 
             using var resizedBitmap = this.Bitmap.Resize(new SKImageInfo(resizedWidth, resizedHeight), SKFilterQuality.None);
@@ -101,7 +98,7 @@ public partial class DemoDrawing : ContentPage
         var view = skCanvas.Handler.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
         view.PointerWheelChanged += (s, e) =>
         {
-            Scale += e.GetCurrentPoint(null).Properties.MouseWheelDelta / 1000.0f;
+            PictureScale += e.GetCurrentPoint(null).Properties.MouseWheelDelta / 1000.0f;
             skCanvas.InvalidateSurface();
         };
 #endif
