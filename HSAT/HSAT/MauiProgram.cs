@@ -4,6 +4,8 @@ using Microsoft.UI;
 using Windows.Graphics;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using CommunityToolkit.Maui;
+using HSAT.Menus.CreateProject;
+using HSAT.Core.Services;
 
 namespace HSAT;
 
@@ -16,6 +18,8 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseSkiaSharp()
             .UseMauiCommunityToolkit()
+            .AddViewModels()
+            .AddServices()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -50,5 +54,18 @@ public static class MauiProgram
         });
 
         return builder.Build();
+    }
+
+    public static MauiAppBuilder AddViewModels(this MauiAppBuilder builder)
+    {
+        builder.Services.AddScoped<CreateProjectViewModel>();
+        return builder;
+    }
+
+    public static MauiAppBuilder AddServices(this MauiAppBuilder builder)
+    {
+        builder.Services.AddScoped<ProjectService>();
+        builder.Services.AddScoped<CreateProjectPopup>();
+        return builder;
     }
 }

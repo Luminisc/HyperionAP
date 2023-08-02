@@ -15,6 +15,7 @@ public partial class AppShell : Shell
 
     private async void CreateProject(object sender, EventArgs e)
     {
-        await this.ShowPopupAsync(new CreateProjectPopup());
+        var popup = Handler.MauiContext.Services.GetRequiredService<CreateProjectPopup>();
+        await this.ShowPopupAsync(popup);
     }
 }

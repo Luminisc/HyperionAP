@@ -59,6 +59,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\HSAT.Core\HSAT.Core.csproj" />
         <ProjectReference Include="..\HSAT.DataAccess\HSAT.DataAccess.csproj" />
     </ItemGroup>
 

@@ -4,8 +4,12 @@ namespace HSAT.Menus.CreateProject;
 
 public partial class CreateProjectPopup : Popup
 {
-	public CreateProjectPopup()
-	{
-		InitializeComponent();
-	}
+    public CreateProjectViewModel ViewModel { get; set; }
+
+    public CreateProjectPopup(CreateProjectViewModel viewModel)
+    {
+        InitializeComponent();
+        ViewModel = viewModel;
+        BindingContext = ViewModel;
+    }
 }
