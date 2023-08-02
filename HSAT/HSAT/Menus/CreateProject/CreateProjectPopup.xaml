@@ -3,6 +3,7 @@
     x:Class="HSAT.Menus.CreateProject.CreateProjectPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:HSAT.Controls.Forms"
     xmlns:mtk="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
     xmlns:vm="clr-namespace:HSAT.Menus.CreateProject"
     x:DataType="vm:CreateProjectViewModel"
@@ -24,10 +25,25 @@
                 Text="X" />
         </Grid>
 
-        <Entry Text="{Binding Path=ProjectName}" />
+        <forms:FormEntry EntryText="Project name:" Text="{Binding Path=ProjectName, Mode=TwoWay}" />
+        <Grid ColumnDefinitions="*, 50">
+            <forms:FormEntry
+                Grid.Column="0"
+                EntryText="Project path:"
+                Text="{Binding Path=ProjectPath, Mode=TwoWay}" />
+            <Button Grid.Column="1" Command="{Binding Path=SelectProjectPathCommand}" />
+        </Grid>
+        <Grid ColumnDefinitions="*, 50">
+            <forms:FormEntry
+                Grid.Column="0"
+                EntryText="Image path:"
+                Text="{Binding Path=ImagePath, Mode=TwoWay}" />
+            <Button Grid.Column="1" />
+        </Grid>
+
         <HorizontalStackLayout HorizontalOptions="EndAndExpand">
+            <Button Clicked="ClosePopup" Text="Cancel" />
             <Button Command="{Binding Path=SaveProjectCommand}" Text="Save" />
         </HorizontalStackLayout>
-
     </VerticalStackLayout>
 </mtk:Popup>

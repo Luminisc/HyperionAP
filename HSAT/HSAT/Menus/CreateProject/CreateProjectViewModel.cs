@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HSAT.Core.Services;
+using HSAT.Services;
 
 namespace HSAT.Menus.CreateProject
 {
@@ -13,11 +14,13 @@ namespace HSAT.Menus.CreateProject
         [ObservableProperty]
         private string imagePath;
 
-        private ProjectService projectService { get; }
+        private ProjectService projectService;
+        private IFileService fileService;
 
-        public CreateProjectViewModel(ProjectService projectService)
+        public CreateProjectViewModel(ProjectService projectService, IFileService fileService)
         {
             this.projectService = projectService;
+            this.fileService = fileService;
         }
 
         [RelayCommand]
@@ -25,6 +28,16 @@ namespace HSAT.Menus.CreateProject
         {
             System.Diagnostics.Debug.WriteLine("Project saving...");
             await Task.CompletedTask;
+        }
+
+        [RelayCommand]
+        public async Task SelectProjectPath()
+        {
+            var file = await fileService.OpenFileDialog();
+            if (file != null)
+            {
+                ProjectPath = file.FullPath;
+            }
         }
     }
 }

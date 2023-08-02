@@ -6,6 +6,7 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using CommunityToolkit.Maui;
 using HSAT.Menus.CreateProject;
 using HSAT.Core.Services;
+using HSAT.Services;
 
 namespace HSAT;
 
@@ -66,6 +67,7 @@ public static class MauiProgram
     {
         builder.Services.AddTransient<ProjectService>();
         builder.Services.AddTransient<CreateProjectPopup>();
+        builder.Services.AddScoped<IFileService, FileService>();
         return builder;
     }
 }
