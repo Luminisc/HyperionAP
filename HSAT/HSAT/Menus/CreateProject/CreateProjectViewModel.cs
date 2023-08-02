@@ -2,41 +2,62 @@
 using CommunityToolkit.Mvvm.Input;
 using HSAT.Core.Services;
 using HSAT.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace HSAT.Menus.CreateProject
 {
-    public partial class CreateProjectViewModel : ObservableObject
+    public partial class CreateProjectViewModel : ObservableValidator
     {
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required]
         private string projectName;
+
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required]
         private string projectPath;
+
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required]
         private string imagePath;
 
-        private ProjectService projectService;
-        private IFileService fileService;
+        private readonly ProjectService projectService;
+        private readonly IFileService fileService;
 
         public CreateProjectViewModel(ProjectService projectService, IFileService fileService)
         {
             this.projectService = projectService;
             this.fileService = fileService;
+            ValidateAllProperties();
         }
 
         [RelayCommand]
         public async Task SaveProject()
         {
-            System.Diagnostics.Debug.WriteLine("Project saving...");
-            await Task.CompletedTask;
+            // TODO: Warn if project exist
+            await this.projectService.Create(ProjectName, ProjectPath, ImagePath);
+            // Update global context
         }
 
         [RelayCommand]
         public async Task SelectProjectPath()
         {
+            var folder = await fileService.OpenFolderDialog();
+            if (folder != null && folder.IsSuccessful)
+            {
+                ProjectPath = folder.Folder.Path;
+            }
+        }
+
+        [RelayCommand]
+        public async Task SelectImagePath()
+        {
             var file = await fileService.OpenFileDialog();
             if (file != null)
             {
-                ProjectPath = file.FullPath;
+                ImagePath = file.FullPath;
             }
         }
     }

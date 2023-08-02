@@ -13,6 +13,11 @@
     <Color x:Key="Tertiary2">#36C736</Color>
     <Color x:Key="Tertiary3">#2BA12B</Color>
 
+    <Color x:Key="Variant1">#85CE67</Color>
+    <Color x:Key="Variant2">#9CF579</Color>
+    <Color x:Key="Variant3">#4FC589</Color>
+    <Color x:Key="Variant4">#0E7835</Color>
+
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
     <Color x:Key="Gray100">#E1E1E1</Color>

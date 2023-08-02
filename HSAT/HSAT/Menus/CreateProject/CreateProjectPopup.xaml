@@ -5,45 +5,88 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:forms="clr-namespace:HSAT.Controls.Forms"
     xmlns:mtk="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:HSAT.Menus.CreateProject"
     x:DataType="vm:CreateProjectViewModel"
     CanBeDismissedByTappingOutsideOfPopup="False"
     Color="{AppThemeBinding Light={StaticResource White},
                             Dark={StaticResource Gray950}}">
-    <VerticalStackLayout HeightRequest="400" WidthRequest="600">
-        <Grid ColumnDefinitions="*" HorizontalOptions="Fill">
+    <Grid
+        ColumnDefinitions="*"
+        HeightRequest="300"
+        RowDefinitions="auto,*,auto"
+        WidthRequest="700">
+        <Grid Grid.Row="0">
             <Label
-                Grid.Column="0"
                 Padding="5"
                 HorizontalOptions="Center"
                 Text="Create new project" />
             <Button
-                Grid.Column="0"
                 Clicked="ClosePopup"
                 HorizontalOptions="End"
                 Style="{StaticResource CloseButtonStyle}"
                 Text="X" />
         </Grid>
-
-        <forms:FormEntry EntryText="Project name:" Text="{Binding Path=ProjectName, Mode=TwoWay}" />
-        <Grid ColumnDefinitions="*, 50">
-            <forms:FormEntry
+        <Grid
+            Grid.Row="1"
+            Padding="5"
+            ColumnDefinitions="auto,*,30"
+            ColumnSpacing="5"
+            RowDefinitions="auto, auto, auto"
+            RowSpacing="5">
+            <Label
+                Grid.Row="0"
                 Grid.Column="0"
-                EntryText="Project path:"
-                Text="{Binding Path=ProjectPath, Mode=TwoWay}" />
-            <Button Grid.Column="1" Command="{Binding Path=SelectProjectPathCommand}" />
-        </Grid>
-        <Grid ColumnDefinitions="*, 50">
-            <forms:FormEntry
-                Grid.Column="0"
-                EntryText="Image path:"
-                Text="{Binding Path=ImagePath, Mode=TwoWay}" />
-            <Button Grid.Column="1" />
-        </Grid>
+                HorizontalOptions="Start"
+                Text="Project name:"
+                VerticalOptions="Center" />
+            <Entry
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="{Binding Path=ProjectName}"
+                VerticalOptions="CenterAndExpand" />
 
-        <HorizontalStackLayout HorizontalOptions="EndAndExpand">
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Text="Project path:"
+                VerticalOptions="Center" />
+            <Entry
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="{Binding Path=ProjectPath}"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="2"
+                Command="{Binding Path=SelectProjectPathCommand}"
+                Text="..." />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Text="Image path:"
+                VerticalOptions="Center" />
+            <Entry
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="{Binding Path=ImagePath}"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                Grid.Row="2"
+                Grid.Column="2"
+                Command="{Binding Path=SelectImagePathCommand}"
+                Text="..." />
+        </Grid>
+        <HorizontalStackLayout Grid.Row="2" HorizontalOptions="EndAndExpand">
             <Button Clicked="ClosePopup" Text="Cancel" />
-            <Button Command="{Binding Path=SaveProjectCommand}" Text="Save" />
+            <Button
+                Clicked="CreateProject"
+                Command="{Binding Path=SaveProjectCommand}"
+                IsEnabled="{Binding HasErrors, Converter={StaticResource InvertedBoolConverter}}"
+                Text="Создать" />
         </HorizontalStackLayout>
-    </VerticalStackLayout>
+    </Grid>
 </mtk:Popup>
