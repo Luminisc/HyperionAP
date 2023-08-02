@@ -71,5 +71,6 @@
 
     <ItemGroup>
       <Folder Include="Modules\" />
+      <Folder Include="Controls\" />
     </ItemGroup>
 </Project>

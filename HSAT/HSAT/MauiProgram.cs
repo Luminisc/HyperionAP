@@ -58,14 +58,14 @@ public static class MauiProgram
 
     public static MauiAppBuilder AddViewModels(this MauiAppBuilder builder)
     {
-        builder.Services.AddScoped<CreateProjectViewModel>();
+        builder.Services.AddTransient<CreateProjectViewModel>();
         return builder;
     }
 
     public static MauiAppBuilder AddServices(this MauiAppBuilder builder)
     {
-        builder.Services.AddScoped<ProjectService>();
-        builder.Services.AddScoped<CreateProjectPopup>();
+        builder.Services.AddTransient<ProjectService>();
+        builder.Services.AddTransient<CreateProjectPopup>();
         return builder;
     }
 }

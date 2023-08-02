@@ -12,4 +12,9 @@ public partial class CreateProjectPopup : Popup
         ViewModel = viewModel;
         BindingContext = ViewModel;
     }
+
+    private void ClosePopup(object sender, EventArgs e)
+    {
+        Close();
+    }
 }

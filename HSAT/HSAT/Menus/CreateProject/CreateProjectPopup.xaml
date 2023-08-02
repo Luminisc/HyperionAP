@@ -4,12 +4,30 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mtk="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:vm="clr-namespace:HSAT.Menus.CreateProject"
+    x:DataType="vm:CreateProjectViewModel"
+    CanBeDismissedByTappingOutsideOfPopup="False"
     Color="{AppThemeBinding Light={StaticResource White},
                             Dark={StaticResource Gray950}}">
     <VerticalStackLayout HeightRequest="400" WidthRequest="600">
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
+        <Grid ColumnDefinitions="*" HorizontalOptions="Fill">
+            <Label
+                Grid.Column="0"
+                Padding="5"
+                HorizontalOptions="Center"
+                Text="Create new project" />
+            <Button
+                Grid.Column="0"
+                Clicked="ClosePopup"
+                HorizontalOptions="End"
+                Style="{StaticResource CloseButtonStyle}"
+                Text="X" />
+        </Grid>
+
+        <Entry Text="{Binding Path=ProjectName}" />
+        <HorizontalStackLayout HorizontalOptions="EndAndExpand">
+            <Button Command="{Binding Path=SaveProjectCommand}" Text="Save" />
+        </HorizontalStackLayout>
+
     </VerticalStackLayout>
 </mtk:Popup>

@@ -1,19 +1,30 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using HSAT.Core;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using HSAT.Core.Services;
-using System.Windows.Input;
 
 namespace HSAT.Menus.CreateProject
 {
-    public class CreateProjectViewModel
+    public partial class CreateProjectViewModel : ObservableObject
     {
-        public Project Project { get; set; }
-        public ICommand SaveProjectCommand { get; } = new AsyncRelayCommand(() => { return Task.CompletedTask; });
-        public ProjectService ProjectService { get; }
+        [ObservableProperty]
+        private string projectName;
+        [ObservableProperty]
+        private string projectPath;
+        [ObservableProperty]
+        private string imagePath;
+
+        private ProjectService projectService { get; }
 
         public CreateProjectViewModel(ProjectService projectService)
         {
-            ProjectService = projectService;
+            this.projectService = projectService;
+        }
+
+        [RelayCommand]
+        public async Task SaveProject()
+        {
+            System.Diagnostics.Debug.WriteLine("Project saving...");
+            await Task.CompletedTask;
         }
     }
 }
