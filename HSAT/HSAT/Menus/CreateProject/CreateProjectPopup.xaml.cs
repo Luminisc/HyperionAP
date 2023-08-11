@@ -21,5 +21,6 @@ public partial class CreateProjectPopup : Popup
     private async void CreateProject(object sender, EventArgs e)
     {
         await ViewModel.SaveProjectCommand.ExecuteAsync(null);
+        Close(true);
     }
 }

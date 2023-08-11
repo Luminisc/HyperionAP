@@ -84,7 +84,6 @@
             <Button Clicked="ClosePopup" Text="Cancel" />
             <Button
                 Clicked="CreateProject"
-                Command="{Binding Path=SaveProjectCommand}"
                 IsEnabled="{Binding HasErrors, Converter={StaticResource InvertedBoolConverter}}"
                 Text="Создать" />
         </HorizontalStackLayout>

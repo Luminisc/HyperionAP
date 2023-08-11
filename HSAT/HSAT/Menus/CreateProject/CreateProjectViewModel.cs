@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using HSAT.Core;
 using HSAT.Core.Services;
 using HSAT.Services;
 using System.ComponentModel.DataAnnotations;
@@ -37,8 +38,9 @@ namespace HSAT.Menus.CreateProject
         public async Task SaveProject()
         {
             // TODO: Warn if project exist
-            await this.projectService.Create(ProjectName, ProjectPath, ImagePath);
-            // Update global context
+            var path = await this.projectService.Create(ProjectName, ProjectPath, ImagePath);
+            var project = await this.projectService.Load(path);
+            ProjectContext.Instance.LoadProject(project);
         }
 
         [RelayCommand]

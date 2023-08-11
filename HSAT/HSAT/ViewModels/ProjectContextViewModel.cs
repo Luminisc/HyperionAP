@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace HSAT.ViewModels
 {
-    internal class ProjectContextViewModel : ObservableObject
+    public class ProjectContextViewModel : ObservableObject
     {
         
     }
