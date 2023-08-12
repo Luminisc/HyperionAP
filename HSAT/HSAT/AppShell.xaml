@@ -72,6 +72,7 @@
     </Shell.MenuItemTemplate>
 
     <MenuItem Clicked="CreateProject" Text="Создать" />
+    <MenuItem Clicked="OpenProject" Text="Открыть" />
 
     <ShellContent
         Title="Главная"

@@ -1,13 +1,13 @@
 ﻿using CommunityToolkit.Maui.Views;
+using HSAT.Core;
+using HSAT.Core.Services;
 using HSAT.Menus.CreateProject;
-using HSAT.ViewModels;
+using HSAT.Services;
 
 namespace HSAT;
 
 public partial class AppShell : Shell
 {
-    ProjectContextViewModel ProjectContext { get; set; } = new ();
-
     public AppShell()
     {
         InitializeComponent();
@@ -15,6 +15,20 @@ public partial class AppShell : Shell
 
     private async void CreateProject(object sender, EventArgs e)
     {
-        await this.ShowPopupAsync(new CreateProjectPopup());
+        var popup = Handler.MauiContext.Services.GetRequiredService<CreateProjectPopup>();
+        await this.ShowPopupAsync(popup);
+    }
+
+    private async void OpenProject(object sender, EventArgs e)
+    {
+        var fileService = Handler.MauiContext.Services.GetRequiredService<IFileService>();
+        var filePath = await fileService.OpenFileDialog();
+
+        if (filePath != null)
+        {
+            var service = Handler.MauiContext.Services.GetRequiredService<ProjectService>();
+            var project = await service.Load(filePath.FullPath);
+            ProjectContext.Instance.LoadProject(project);
+        }
     }
 }
