@@ -64,10 +64,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Modules\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <MauiXaml Update="**\*.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>

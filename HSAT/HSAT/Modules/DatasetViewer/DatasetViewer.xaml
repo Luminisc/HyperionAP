@@ -3,15 +3,42 @@
     x:Class="HSAT.Modules.DatasetViewer.DatasetViewer"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:behaviors="clr-namespace:HSAT.Controls.Behaviors"
-    x:Name="page"
-    Title="DatasetViewer">
-    <ContentPage.Behaviors>
-        <behaviors:MouseZoomBehavior ZoomCommand="{Binding DemoCommand, Source={Reference page}}" />
-    </ContentPage.Behaviors>
+    xmlns:converters="clr-namespace:HSAT.Converters"
+    xmlns:drawing="clr-namespace:HSAT.Controls.Drawing"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:HSAT.Modules.DatasetViewer"
+    Title="DatasetViewer"
+    x:DataType="vm:DatasetViewerViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IntEnumConverter x:Key="IntEnum" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Grid ColumnDefinitions="150, *">
         <VerticalStackLayout Grid.Column="0">
-
+            <!--  Band number selection  -->
+            <Label HorizontalTextAlignment="Center" Text="Band number:" />
+            <Entry
+                x:Name="bandNumber"
+                Keyboard="Numeric"
+                Text="{Binding BandNumber}"
+                Unfocused="bandNumber_Unfocused">
+                <Entry.Behaviors>
+                    <toolkit:NumericValidationBehavior
+                        Flags="ValidateOnValueChanged"
+                        IsValid="{Binding IsValid}"
+                        MaximumDecimalPlaces="0"
+                        MaximumValue="100"
+                        MinimumValue="0" />
+                </Entry.Behaviors>
+            </Entry>
+            <!--  Visualization mode selection  -->
+            <Label HorizontalTextAlignment="Center" Text="Visualization mode:" />
+            <Picker
+                x:Name="visualizationMode"
+                ItemsSource="{Binding Modes}"
+                SelectedIndex="{Binding Mode, Converter={StaticResource IntEnum}}" />
         </VerticalStackLayout>
+        <drawing:DrawingCanvas Grid.Column="1" />
     </Grid>
 </ContentPage>

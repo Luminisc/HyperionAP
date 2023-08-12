@@ -28,15 +28,6 @@ namespace HSAT.Controls.Behaviors
             bindable.HandlerChanged += Bindable_HandlerChanged;
         }
 
-        private void Bindable_HandlerChanged(object sender, EventArgs e)
-        {
-#if WINDOWS
-            var view = ((VisualElement)sender).Handler.PlatformView as UIElement;
-            view.PointerWheelChanged -= ExecuteCommand;
-            view.PointerWheelChanged += ExecuteCommand;
-#endif
-        }
-
         protected override void OnDetachingFrom(VisualElement bindable)
         {
             base.OnDetachingFrom(bindable);
@@ -44,6 +35,15 @@ namespace HSAT.Controls.Behaviors
             bindable.HandlerChanged -= Bindable_HandlerChanged;
             var view = bindable.Handler.PlatformView as UIElement;
             view.PointerWheelChanged -= ExecuteCommand;
+#endif
+        }
+
+        private void Bindable_HandlerChanged(object sender, EventArgs e)
+        {
+#if WINDOWS
+            var view = ((VisualElement)sender).Handler.PlatformView as UIElement;
+            view.PointerWheelChanged -= ExecuteCommand;
+            view.PointerWheelChanged += ExecuteCommand;
 #endif
         }
 

@@ -1,16 +1,20 @@
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Input;
-using System.Windows.Input;
-
 namespace HSAT.Modules.DatasetViewer;
 
 public partial class DatasetViewer : ContentPage
 {
+    private readonly DatasetViewerViewModel viewModel;
+
     public DatasetViewer()
     {
         InitializeComponent();
-        BindingContext = this;
+        this.viewModel = new();
+        BindingContext = this.viewModel;
     }
 
-    public ICommand DemoCommand { get; set; } = new RelayCommand<PointerRoutedEventArgs>((e) => { });
+    private void bandNumber_Unfocused(object sender, FocusEventArgs e)
+    {
+        if (!viewModel.IsValid)
+            return;
+
+    }
 }

@@ -61,6 +61,7 @@ public static class MauiProgram
     public static MauiAppBuilder AddViewModels(this MauiAppBuilder builder)
     {
         builder.Services.AddTransient<CreateProjectViewModel>();
+        builder.Services.AddTransient<DatasetViewerViewModel>();
         return builder;
     }
 

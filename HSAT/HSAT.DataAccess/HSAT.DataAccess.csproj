@@ -21,4 +21,8 @@
         <PackageReference Include="MaxRev.Gdal.WindowsRuntime.Minimal" Version="3.7.0.100" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\HSAT.Core\HSAT.Core.csproj" />
+    </ItemGroup>
+
 </Project>
