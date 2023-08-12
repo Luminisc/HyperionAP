@@ -1,4 +1,5 @@
 using HSAT.Core;
+using Microsoft.UI.Xaml;
 using OSGeo.GDAL;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
@@ -95,7 +96,7 @@ public partial class DemoDrawing : ContentPage
     {
         base.OnHandlerChanged();
 #if WINDOWS
-        var view = skCanvas.Handler.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
+        var view = skCanvas.Handler.PlatformView as UIElement;
         view.PointerWheelChanged += (s, e) =>
         {
             PictureScale += e.GetCurrentPoint(null).Properties.MouseWheelDelta / 1000.0f;

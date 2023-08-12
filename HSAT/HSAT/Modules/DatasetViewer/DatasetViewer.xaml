@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="HSAT.Modules.DatasetViewer.DatasetViewer"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:HSAT.Controls.Behaviors"
+    x:Name="page"
+    Title="DatasetViewer">
+    <ContentPage.Behaviors>
+        <behaviors:MouseZoomBehavior ZoomCommand="{Binding DemoCommand, Source={Reference page}}" />
+    </ContentPage.Behaviors>
+    <Grid ColumnDefinitions="150, *">
+        <VerticalStackLayout Grid.Column="0">
+
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

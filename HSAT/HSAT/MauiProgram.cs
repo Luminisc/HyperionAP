@@ -1,12 +1,13 @@
-﻿using Microsoft.Maui.LifecycleEvents;
-using Microsoft.UI.Windowing;
-using Microsoft.UI;
-using Windows.Graphics;
-using SkiaSharp.Views.Maui.Controls.Hosting;
-using CommunityToolkit.Maui;
-using HSAT.Menus.CreateProject;
+﻿using CommunityToolkit.Maui;
 using HSAT.Core.Services;
+using HSAT.Menus.CreateProject;
+using HSAT.Modules.DatasetViewer;
 using HSAT.Services;
+using Microsoft.Maui.LifecycleEvents;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using SkiaSharp.Views.Maui.Controls.Hosting;
+using Windows.Graphics;
 
 namespace HSAT;
 
@@ -66,8 +67,14 @@ public static class MauiProgram
     public static MauiAppBuilder AddServices(this MauiAppBuilder builder)
     {
         builder.Services.AddTransient<ProjectService>();
-        builder.Services.AddTransient<CreateProjectPopup>();
         builder.Services.AddScoped<IFileService, FileService>();
+        return builder;
+    }
+
+    public static MauiAppBuilder AddComponents(this MauiAppBuilder builder)
+    {
+        builder.Services.AddTransient<CreateProjectPopup>();
+        builder.Services.AddTransient<DatasetViewer>();
         return builder;
     }
 }
