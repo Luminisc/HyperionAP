@@ -1,6 +1,4 @@
-﻿using HSAT.ViewModels;
-
-namespace HSAT;
+﻿namespace HSAT;
 
 public partial class App : Application
 {
