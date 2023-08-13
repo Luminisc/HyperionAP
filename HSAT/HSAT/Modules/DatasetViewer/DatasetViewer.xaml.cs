@@ -1,7 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
 using HSAT.Core;
 using HSAT.Core.Imaging;
-using Microsoft.UI.Xaml.Input;
 using SkiaSharp;
 using System.Windows.Input;
 

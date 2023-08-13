@@ -24,6 +24,7 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .AddViewModels()
             .AddServices()
+            .AddComponents()
             .AddDataAccess()
             .ConfigureFonts(fonts =>
             {
