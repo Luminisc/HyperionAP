@@ -1,21 +1,16 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.Maui.Behaviors;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using System.Windows.Input;
 
 namespace HSAT.Controls.Behaviors
 {
     /// <summary>Allow to handle mouse scroll events</summary>
-    public class MouseZoomBehavior : Behavior<VisualElement>
+    public class MouseZoomBehavior : BaseBehavior<VisualElement>
     {
-        /// <summary>
-        /// Backing BindableProperty for the <see cref="ZoomCommand"/> property.
-        /// </summary>
         public static readonly BindableProperty ZoomCommandProperty =
             BindableProperty.Create(nameof(ZoomCommand), typeof(ICommand), typeof(MouseZoomBehavior));
 
-        /// <summary>
-        /// The Command that should be executed when the event configured with <see cref="EventName"/> is triggered. This is a bindable property.
-        /// </summary>
         public ICommand ZoomCommand
         {
             get => (ICommand)GetValue(ZoomCommandProperty);
@@ -25,6 +20,7 @@ namespace HSAT.Controls.Behaviors
         protected override void OnAttachedTo(VisualElement bindable)
         {
             base.OnAttachedTo(bindable);
+            BindingContext = bindable.BindingContext;
             bindable.HandlerChanged += Bindable_HandlerChanged;
         }
 

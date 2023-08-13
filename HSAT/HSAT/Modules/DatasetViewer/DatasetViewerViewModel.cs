@@ -1,25 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.ComponentModel;
+using HSAT.Validators;
 
 namespace HSAT.Modules.DatasetViewer
 {
     public partial class DatasetViewerViewModel : ObservableValidator
     {
         [ObservableProperty]
-        //[NotifyDataErrorInfo]
-        //[Required]
-        private int bandNumber;
+        [NotifyDataErrorInfo]
+        [LessThan(nameof(MaxBand), "", true)]
+        private int bandNumber = 1;
 
         [ObservableProperty]
-        //[NotifyDataErrorInfo]
-        //[Required]
         private VisualizationMode mode;
 
         [ObservableProperty]
-        private int maxBand = 0;
-
-        [ObservableProperty]
-        private bool isValid;
+        private int maxBand = 1;
 
         public List<string> Modes { get; } = Enum.GetNames<VisualizationMode>().ToList();
 

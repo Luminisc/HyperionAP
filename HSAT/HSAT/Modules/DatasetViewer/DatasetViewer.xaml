@@ -26,10 +26,10 @@
                 <Entry.Behaviors>
                     <toolkit:NumericValidationBehavior
                         Flags="ValidateOnValueChanged"
-                        IsValid="{Binding IsValid}"
+                        IsValid="{Binding HasErrors, Converter={StaticResource InvertedBoolConverter}}"
                         MaximumDecimalPlaces="0"
-                        MaximumValue="100"
-                        MinimumValue="0" />
+                        MaximumValue="{Binding MaxBand}"
+                        MinimumValue="1" />
                 </Entry.Behaviors>
             </Entry>
             <!--  Visualization mode selection  -->
@@ -39,6 +39,6 @@
                 ItemsSource="{Binding Modes}"
                 SelectedIndex="{Binding Mode, Converter={StaticResource IntEnum}}" />
         </VerticalStackLayout>
-        <drawing:DrawingCanvas Grid.Column="1" />
+        <drawing:DrawingCanvas x:Name="canvas" Grid.Column="1" />
     </Grid>
 </ContentPage>

@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui;
+using HSAT.Core.DI;
 using HSAT.Core.Services;
+using HSAT.DataAccess;
 using HSAT.Menus.CreateProject;
 using HSAT.Modules.DatasetViewer;
 using HSAT.Services;
@@ -22,6 +24,7 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .AddViewModels()
             .AddServices()
+            .AddDataAccess()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -54,8 +57,15 @@ public static class MauiProgram
                 }
             }));
         });
+        var app = builder.Build();
+        app.Services.UseDI();
+        return app;
+    }
 
-        return builder.Build();
+    public static MauiAppBuilder AddDataAccess(this MauiAppBuilder builder)
+    {
+        builder.Services.AddDataAccess();
+        return builder;
     }
 
     public static MauiAppBuilder AddViewModels(this MauiAppBuilder builder)

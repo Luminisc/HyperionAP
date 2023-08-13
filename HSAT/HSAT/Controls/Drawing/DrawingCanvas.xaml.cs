@@ -1,80 +1,52 @@
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Input;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
-using System.Windows.Input;
 
 namespace HSAT.Controls.Drawing;
 
-public partial class DrawingCanvas : ContentView
+public partial class DrawingCanvas : ContentView, IDisposable
 {
-    ICommand ZoomCommand { get; }
-
-    SKBitmap Bitmap { get; set; }
-    SKPoint CurrentTranslation { get; set; } = new SKPoint(0, 0);
-    SKPoint PrevTranslation { get; set; } = new SKPoint(0, 0);
-    double PictureScale { get; set; } = 1.0f;
+    DrawingCanvasViewModel viewModel;
 
     public DrawingCanvas()
     {
         InitializeComponent();
-        ZoomCommand = new RelayCommand<PointerRoutedEventArgs>(CanvasZoomChanged);
+        viewModel = new();
+        BindingContext = viewModel;
+        viewModel.OnSurfaceInvalidation += (_, _) => { InvalidateSurface(); };
+
+        // Workaround to fix `null` in binding properties of behaviors
+        // https://github.com/xamarin/Xamarin.Forms/issues/2581
+        foreach (var behavior in skCanvas.Behaviors)
+            behavior.BindingContext = BindingContext;
     }
 
     /// <summary>Set new bitmap for canvas, and dispose previous one</summary>
-    public void SetBitmap(SKBitmap bitmap)
-    {
-        Bitmap?.Dispose();
-        Bitmap = bitmap;
-        InvalidateSurface();
-    }
+    public void SetBitmap(SKBitmap bitmap) => viewModel.SetBitmap(bitmap);
 
-    public void InvalidateSurface()
-    {
-        skCanvas.InvalidateSurface();
-    }
+    public void Dispose() => viewModel.Dispose();
 
     private void CanvasPaintSurface(object sender, SKPaintSurfaceEventArgs e)
     {
-        if (Bitmap == null)
+        if (viewModel.Bitmap == null)
             return;
 
+        var Bitmap = viewModel.Bitmap;
         var surface = e.Surface;
         var canvas = surface.Canvas;
         int width = e.Info.Width;
         int height = e.Info.Height;
 
         canvas.Clear();
-        int resizedWidth = (int)(Bitmap.Width * PictureScale),
-            resizedHeight = (int)(Bitmap.Height * PictureScale);
+        int resizedWidth = (int)(Bitmap.Width * viewModel.PictureScale),
+            resizedHeight = (int)(Bitmap.Height * viewModel.PictureScale);
 
         using var resizedBitmap = Bitmap.Resize(new SKImageInfo(resizedWidth, resizedHeight), SKFilterQuality.None);
 
-        var translation = CurrentTranslation + new SKPoint((width - resizedWidth) / 2, (height - resizedHeight) / 2);
+        var translation = viewModel.CurrentTranslation + new SKPoint((width - resizedWidth) / 2, (height - resizedHeight) / 2);
         canvas.DrawBitmap(resizedBitmap, translation);
     }
 
-    private void CanvasPanUpdated(object sender, PanUpdatedEventArgs e)
-    {
-        switch (e.StatusType)
-        {
-            case GestureStatus.Running:
-                CurrentTranslation = PrevTranslation + new SKPoint((float)e.TotalX, (float)e.TotalY);
-                break;
-            case GestureStatus.Completed:   
-                PrevTranslation = CurrentTranslation;
-                break;
-            case GestureStatus.Canceled:
-                CurrentTranslation = PrevTranslation;
-                break;
-        }
-        InvalidateSurface();
-    }
+    private void CanvasPanUpdated(object sender, PanUpdatedEventArgs e) => viewModel.CanvasPanUpdated(sender, e);
 
-    private void CanvasZoomChanged(PointerRoutedEventArgs e)
-    {
-        PictureScale += e.GetCurrentPoint(null).Properties.MouseWheelDelta / 1000.0f;
-        PictureScale = Math.Clamp(PictureScale, double.Epsilon, 1000);
-        InvalidateSurface();
-    }
+    private void InvalidateSurface() => skCanvas.InvalidateSurface();
 }
