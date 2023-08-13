@@ -6,15 +6,15 @@ using System.Windows.Input;
 namespace HSAT.Controls.Behaviors
 {
     /// <summary>Allow to handle mouse scroll events</summary>
-    public class MouseZoomBehavior : BaseBehavior<VisualElement>
+    public class MouseScrollBehavior : BaseBehavior<VisualElement>
     {
-        public static readonly BindableProperty ZoomCommandProperty =
-            BindableProperty.Create(nameof(ZoomCommand), typeof(ICommand), typeof(MouseZoomBehavior));
+        public static readonly BindableProperty ScrollCommandProperty =
+            BindableProperty.Create(nameof(ScrollCommand), typeof(ICommand), typeof(MouseScrollBehavior));
 
-        public ICommand ZoomCommand
+        public ICommand ScrollCommand
         {
-            get => (ICommand)GetValue(ZoomCommandProperty);
-            set => SetValue(ZoomCommandProperty, value);
+            get => (ICommand)GetValue(ScrollCommandProperty);
+            set => SetValue(ScrollCommandProperty, value);
         }
 
         protected override void OnAttachedTo(VisualElement bindable)
@@ -45,7 +45,7 @@ namespace HSAT.Controls.Behaviors
 
         protected void ExecuteCommand(object sender, PointerRoutedEventArgs e)
         {
-            ZoomCommand?.Execute(e);
+            ScrollCommand?.Execute(e);
         }
     }
 }

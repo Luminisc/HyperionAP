@@ -9,7 +9,7 @@
     x:DataType="drawing:DrawingCanvasViewModel">
     <skia:SKCanvasView x:Name="skCanvas" PaintSurface="CanvasPaintSurface">
         <skia:SKCanvasView.Behaviors>
-            <behaviors:MouseZoomBehavior ZoomCommand="{Binding ZoomChangedCommand}" />
+            <behaviors:MouseScrollBehavior ScrollCommand="{Binding ZoomChangedCommand}" />
         </skia:SKCanvasView.Behaviors>
         <skia:SKCanvasView.GestureRecognizers>
             <PanGestureRecognizer PanUpdated="CanvasPanUpdated" />
