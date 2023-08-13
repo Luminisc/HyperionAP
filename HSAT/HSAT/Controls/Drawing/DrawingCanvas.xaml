@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="HSAT.Controls.Drawing.DrawingCanvas"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:HSAT.Controls.Behaviors"
+    xmlns:drawing="clr-namespace:HSAT.Controls.Drawing"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+    x:DataType="drawing:DrawingCanvasViewModel">
+    <skia:SKCanvasView x:Name="skCanvas" PaintSurface="CanvasPaintSurface">
+        <skia:SKCanvasView.Behaviors>
+            <behaviors:MouseScrollBehavior ScrollCommand="{Binding ZoomChangedCommand}" />
+        </skia:SKCanvasView.Behaviors>
+        <skia:SKCanvasView.GestureRecognizers>
+            <PanGestureRecognizer PanUpdated="CanvasPanUpdated" />
+        </skia:SKCanvasView.GestureRecognizers>
+    </skia:SKCanvasView>
+</ContentView>

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:demoDrawing="clr-namespace:HSAT.Experiments.DemoDrawing"
+    xmlns:dv="clr-namespace:HSAT.Modules.DatasetViewer"
     xmlns:local="clr-namespace:HSAT"
     xmlns:pages="clr-namespace:HSAT.Pages"
     Shell.FlyoutBehavior="Flyout"
@@ -74,12 +75,7 @@
     <MenuItem Clicked="CreateProject" Text="Создать" />
     <MenuItem Clicked="OpenProject" Text="Открыть" />
 
-    <ShellContent
-        Title="Главная"
-        ContentTemplate="{DataTemplate pages:MainPage}"
-        Route="MainPage" />
-    <ShellContent
-        Title="Демо - рисование"
-        ContentTemplate="{DataTemplate demoDrawing:DemoDrawing}"
-        Route="DemoDrawing" />
+    <ShellContent Title="Главная" ContentTemplate="{DataTemplate pages:MainPage}" />
+    <ShellContent Title="Просмотр датасета" ContentTemplate="{DataTemplate dv:DatasetViewer}" />
+    <ShellContent Title="Демо - рисование" ContentTemplate="{DataTemplate demoDrawing:DemoDrawing}" />
 </Shell>

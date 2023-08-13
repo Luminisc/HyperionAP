@@ -19,7 +19,7 @@
             Grid.Column="1"
             PaintSurface="SKCanvasView_PaintSurface">
             <skia:SKCanvasView.GestureRecognizers>
-                <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
+                <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated" />
             </skia:SKCanvasView.GestureRecognizers>
         </skia:SKCanvasView>
     </Grid>

@@ -1,12 +1,15 @@
-﻿using Microsoft.Maui.LifecycleEvents;
-using Microsoft.UI.Windowing;
-using Microsoft.UI;
-using Windows.Graphics;
-using SkiaSharp.Views.Maui.Controls.Hosting;
-using CommunityToolkit.Maui;
-using HSAT.Menus.CreateProject;
+﻿using CommunityToolkit.Maui;
+using HSAT.Core.DI;
 using HSAT.Core.Services;
+using HSAT.DataAccess;
+using HSAT.Menus.CreateProject;
+using HSAT.Modules.DatasetViewer;
 using HSAT.Services;
+using Microsoft.Maui.LifecycleEvents;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using SkiaSharp.Views.Maui.Controls.Hosting;
+using Windows.Graphics;
 
 namespace HSAT;
 
@@ -21,6 +24,7 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .AddViewModels()
             .AddServices()
+            .AddDataAccess()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -53,21 +57,35 @@ public static class MauiProgram
                 }
             }));
         });
+        var app = builder.Build();
+        app.Services.UseDI();
+        return app;
+    }
 
-        return builder.Build();
+    public static MauiAppBuilder AddDataAccess(this MauiAppBuilder builder)
+    {
+        builder.Services.AddDataAccess();
+        return builder;
     }
 
     public static MauiAppBuilder AddViewModels(this MauiAppBuilder builder)
     {
         builder.Services.AddTransient<CreateProjectViewModel>();
+        builder.Services.AddTransient<DatasetViewerViewModel>();
         return builder;
     }
 
     public static MauiAppBuilder AddServices(this MauiAppBuilder builder)
     {
         builder.Services.AddTransient<ProjectService>();
-        builder.Services.AddTransient<CreateProjectPopup>();
         builder.Services.AddScoped<IFileService, FileService>();
+        return builder;
+    }
+
+    public static MauiAppBuilder AddComponents(this MauiAppBuilder builder)
+    {
+        builder.Services.AddTransient<CreateProjectPopup>();
+        builder.Services.AddTransient<DatasetViewer>();
         return builder;
     }
 }
