@@ -1,10 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using HSAT.Validators;
+using Microsoft.UI.Xaml.Input;
 
 namespace HSAT.Modules.DatasetViewer
 {
     public partial class DatasetViewerViewModel : ObservableValidator
     {
+        public event EventHandler OnRedraw;
+
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [LessThan(nameof(MaxBand), "", true)]
@@ -21,6 +25,16 @@ namespace HSAT.Modules.DatasetViewer
         public DatasetViewerViewModel()
         {
             ValidateAllProperties();
+        }
+
+        [RelayCommand]
+        public void ScrollBand(PointerRoutedEventArgs e)
+        {
+            var delta = e.GetCurrentPoint(null).Properties.MouseWheelDelta;
+            var i = delta > 0 ? 1 : -1;
+            var bandNum = Math.Clamp(BandNumber + i, 1, MaxBand);
+            BandNumber = bandNum;
+            OnRedraw?.Invoke(this, EventArgs.Empty);
         }
     }
 

@@ -3,6 +3,7 @@
     x:Class="HSAT.Modules.DatasetViewer.DatasetViewer"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:HSAT.Controls.Behaviors"
     xmlns:converters="clr-namespace:HSAT.Converters"
     xmlns:drawing="clr-namespace:HSAT.Controls.Drawing"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -17,13 +18,18 @@
     <Grid ColumnDefinitions="150, *">
         <VerticalStackLayout Grid.Column="0">
             <!--  Band number selection  -->
-            <Label HorizontalTextAlignment="Center" Text="Band number:" />
+            <Label
+                HorizontalOptions="Fill"
+                HorizontalTextAlignment="Center"
+                Text="Band number:" />
             <Entry
                 x:Name="bandNumber"
+                HorizontalOptions="Fill"
                 Keyboard="Numeric"
                 Text="{Binding BandNumber}"
                 Unfocused="bandNumber_Unfocused">
                 <Entry.Behaviors>
+                    <behaviors:MouseScrollBehavior ScrollCommand="{Binding ScrollBandCommand}" />
                     <toolkit:NumericValidationBehavior
                         Flags="ValidateOnValueChanged"
                         IsValid="{Binding HasErrors, Converter={StaticResource InvertedBoolConverter}}"
@@ -36,8 +42,10 @@
             <Label HorizontalTextAlignment="Center" Text="Visualization mode:" />
             <Picker
                 x:Name="visualizationMode"
+                HorizontalOptions="Fill"
                 ItemsSource="{Binding Modes}"
-                SelectedIndex="{Binding Mode, Converter={StaticResource IntEnum}}" />
+                SelectedIndex="{Binding Mode, Converter={StaticResource IntEnum}}"
+                SelectedIndexChanged="visualizationMode_SelectedIndexChanged" />
         </VerticalStackLayout>
         <drawing:DrawingCanvas x:Name="canvas" Grid.Column="1" />
     </Grid>
