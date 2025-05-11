@@ -2,7 +2,7 @@
 
 namespace HyperionAP.UI.Server.Services
 {
-    internal class FilesService
+    public class FilesService
     {
         static Dictionary<Guid, FileInfo> Files = new();
 
@@ -16,9 +16,9 @@ namespace HyperionAP.UI.Server.Services
             return fileInfo;
         }
 
-        public IEnumerable<(Guid fileId, string filename)> GetFiles()
+        public IEnumerable<FileInfo> GetFiles()
         {
-            return Files.Select(x => (x.Key, x.Value.FileName));
+            return Files.Select(x => x.Value);
         }
 
         internal async Task<FileInfo> AddFile(IFormFile file)
@@ -31,19 +31,38 @@ namespace HyperionAP.UI.Server.Services
                 throw new ArgumentException("Id already present!");
 
             Directory.CreateDirectory(folderPath);
+            var tempFilepath = Path.Combine(UploadFolder, $"{fileId}_{filename}.tmp");
             using var fileStream = file.OpenReadStream();
             var archiveSignature = GetArchiveSignature(fileStream);
             if (archiveSignature != KnownArchives.Zip)
                 throw new ArgumentException($"Unsupported archive type! {archiveSignature}");
 
-            ZipFile.ExtractToDirectory(fileStream, folderPath);
+            using (var stream = File.Create(tempFilepath))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            using (var zip = ZipFile.Open(tempFilepath, ZipArchiveMode.Read))
+            {
+                foreach (var entry in zip.Entries)
+                {
+                    if (string.IsNullOrEmpty(entry.Name)) continue;
+
+                    string fileName = Path.GetFileName(entry.Name);
+                    string destPath = Path.Combine(folderPath, fileName);
+
+                    entry.ExtractToFile(destPath, overwrite: true);
+                }
+            }
+
+            File.Delete(tempFilepath);
             
             var fileInfo = AddFile(fileId, filename);
 
             return fileInfo;
         }
 
-        public KnownArchives GetArchiveSignature(Stream stream)
+        internal KnownArchives GetArchiveSignature(Stream stream)
         {
             using var reader = new BinaryReader(stream);
 
@@ -71,7 +90,7 @@ namespace HyperionAP.UI.Server.Services
                 return KnownArchives._7z;
             }
 
-            stream.Seek(-header.Length, SeekOrigin.Current);
+            stream.Seek(0, SeekOrigin.Begin);
 
             return KnownArchives.Unknown;
         }

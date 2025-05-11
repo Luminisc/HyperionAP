@@ -1,23 +1,13 @@
 ﻿using HyperionAP.Data.Gdal;
 using HyperionAP.UI.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
 using FileInfo = HyperionAP.UI.Server.Services.FileInfo;
 
 namespace HyperionAP.UI.Server.Controllers
 {
     [Route("api/[controller]/[action]")]
-    public class DemoController : ControllerBase
+    public class DemoController(FilesService filesService, DatasetService datasetService) : ControllerBase
     {
-        private readonly FilesService filesService;
-        private readonly DatasetService datasetService;
-
-        internal DemoController(FilesService filesService, DatasetService datasetService)
-        {
-            this.filesService = filesService;
-            this.datasetService = datasetService;
-        }
-
         [HttpPost]
         public async Task<FileInfo> Upload(IFormFile file)
         {
@@ -26,7 +16,7 @@ namespace HyperionAP.UI.Server.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<(Guid fileId, string filename)> GetFiles()
+        public IEnumerable<FileInfo> GetFiles()
         {
             return filesService.GetFiles();
         }
@@ -35,8 +25,8 @@ namespace HyperionAP.UI.Server.Controllers
         public async Task<IActionResult> GetImageBand(Guid fileId, int band)
         {
             var filePath = filesService.GetDatasetPath(fileId);
-            //return datasetService.GetImageBand(band);
-            return null;
+            var pngBytes = datasetService.GetDemoImageBand(filePath, band);
+            return File(pngBytes, "image/png", "output.png");
         }
     }
 }

@@ -1,0 +1,7 @@
+<input type="text" [(ngModel)]="fileId"/>
+<input type="number" [(ngModel)]="bandIndex"/>
+<button (click)="download()">Download file</button>
+<br/>
+<div class="image-container">
+  <img *ngIf="imageUrl" [src]="imageUrl" />
+</div>
