@@ -3,6 +3,10 @@ using HyperionAP.UI.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+var connectionString = configuration.GetConnectionString("Maindb");
+
+// Initialize services
 builder.Services.AddScoped<FilesService>();
 GdalInitializer.Initialize(builder.Services);
 

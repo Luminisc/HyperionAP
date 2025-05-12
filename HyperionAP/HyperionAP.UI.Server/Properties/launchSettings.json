@@ -20,14 +20,6 @@
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7089;http://localhost:5030"
     },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "Container (Dockerfile)": {
       "commandName": "Docker",
       "launchBrowser": true,
@@ -37,7 +29,8 @@
         "ASPNETCORE_HTTP_PORTS": "8080"
       },
       "publishAllPorts": true,
-      "useSSL": true
+      "useSSL": true,
+      "containerName": "hyperion-ui-server"
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
