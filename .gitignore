@@ -351,3 +351,4 @@ MigrationBackup/
 
 /_HSI
 /HyperionAP/HyperionAP.UI.Server/Uploads
+/.env
