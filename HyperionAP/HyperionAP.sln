@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperionAP.UI.Server", "Hyp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperionAP.Data.Gdal", "HyperionAP.Data.Gdal\HyperionAP.Data.Gdal.csproj", "{0F1965EF-45A1-4254-9987-CAA0FDFFD586}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HyperionAP.Core", "HyperionAP.Core", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperionAP.Core.Models", "HyperionAP.Core\HyperionAP.Core.Models\HyperionAP.Core.Models.csproj", "{F3D89D5F-3D5E-4971-B084-657F6E4A99DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperionAP.Infrastructure", "HyperionAP.Infrastructure\HyperionAP.Infrastructure.csproj", "{84089F77-87F0-45FE-90F0-A4E82437702A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperionAP.Core.Repositories", "HyperionAP.Core\HyperionAP.Core.Repositories\HyperionAP.Core.Repositories.csproj", "{BC8DA9A9-B136-445B-1FB9-13F1117DB13E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +29,25 @@ Global
 		{0F1965EF-45A1-4254-9987-CAA0FDFFD586}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F1965EF-45A1-4254-9987-CAA0FDFFD586}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F1965EF-45A1-4254-9987-CAA0FDFFD586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3D89D5F-3D5E-4971-B084-657F6E4A99DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3D89D5F-3D5E-4971-B084-657F6E4A99DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3D89D5F-3D5E-4971-B084-657F6E4A99DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3D89D5F-3D5E-4971-B084-657F6E4A99DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84089F77-87F0-45FE-90F0-A4E82437702A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84089F77-87F0-45FE-90F0-A4E82437702A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84089F77-87F0-45FE-90F0-A4E82437702A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84089F77-87F0-45FE-90F0-A4E82437702A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC8DA9A9-B136-445B-1FB9-13F1117DB13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC8DA9A9-B136-445B-1FB9-13F1117DB13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC8DA9A9-B136-445B-1FB9-13F1117DB13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC8DA9A9-B136-445B-1FB9-13F1117DB13E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F3D89D5F-3D5E-4971-B084-657F6E4A99DC} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{BC8DA9A9-B136-445B-1FB9-13F1117DB13E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {55364242-449C-4305-AC0F-B23B28A4886F}

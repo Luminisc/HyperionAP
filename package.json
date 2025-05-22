@@ -1,0 +1,20 @@
+{
+  "name": "hyperionap",
+  "version": "1.0.0",
+  "description": "1. Install GDAL libs: https://www.gisinternals.com/release.php  \r (Verified - version 3.6.4, on MSVS 2022, x64)",
+  "scripts": {
+    "docker-build": "docker compose build --parallel",
+    "docker-up": "docker compose up -d",
+    "docker-down": "docker compose down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luminisc/HyperionAP.git"
+  },
+  "author": "Luminisc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Luminisc/HyperionAP/issues"
+  },
+  "homepage": "https://github.com/Luminisc/HyperionAP#readme"
+}

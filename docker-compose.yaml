@@ -1,0 +1,12 @@
+services:
+  maindb:
+    environment:
+      POSTGRES_DB: ${MAINDB_DB}
+      POSTGRES_USER: ${MAINDB_USER}
+      POSTGRES_PASSWORD: ${MAINDB_PASSWORD}
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    volumes:
+      - ${DATA_DIR}/maindb:/var/lib/postgresql/data:rw
+    restart: always

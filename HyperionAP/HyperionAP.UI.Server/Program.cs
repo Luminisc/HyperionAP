@@ -1,10 +1,11 @@
 using HyperionAP.Data.Gdal;
+using HyperionAP.Infrastructure;
 using HyperionAP.UI.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var configuration = builder.Configuration;
-var connectionString = configuration.GetConnectionString("Maindb");
+InfrastructureRegistration.AddDbContext(builder);
+InfrastructureRegistration.AddRepositories(builder.Services);
 
 // Initialize services
 builder.Services.AddScoped<FilesService>();

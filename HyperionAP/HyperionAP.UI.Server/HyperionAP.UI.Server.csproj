@@ -18,19 +18,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HyperionAP.Core\HyperionAP.Core.Models\HyperionAP.Core.Models.csproj" />
+    <ProjectReference Include="..\HyperionAP.Core\HyperionAP.Core.Repositories\HyperionAP.Core.Repositories.csproj" />
     <ProjectReference Include="..\HyperionAP.Data.Gdal\HyperionAP.Data.Gdal.csproj" />
+    <ProjectReference Include="..\HyperionAP.Infrastructure\HyperionAP.Infrastructure.csproj" />
   </ItemGroup>
 
   <Target Name="NSwag" BeforeTargets="AfterBuild">
-    <Exec
-      ConsoleToMSBuild="true"
-      ContinueOnError="true"
-      Command="$(NSwagExe_Net80) run nswag.json">
-      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode"/>
+    <Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net80) run nswag.json">
+      <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
       <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
     </Exec>
 
-    <Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low"/>
-    <Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'"/>
+    <Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low" />
+    <Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'" />
   </Target>
 </Project>

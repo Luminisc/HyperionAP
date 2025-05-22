@@ -21,6 +21,10 @@ export interface IDemoClient {
     upload(file?: FileParameter | null | undefined): Observable<FileInfo>;
     getFiles(): Observable<FileInfo[]>;
     getImageBand(fileId?: string | undefined, band?: number | undefined): Observable<FileResponse>;
+    getUsers(): Observable<User[]>;
+    getProjects(): Observable<Project[]>;
+    addUser(displayName?: string | undefined, login?: string | undefined, projects?: Project[] | undefined, id?: string | undefined): Observable<User>;
+    addProject(name?: string | undefined, owner?: string | undefined): Observable<Project>;
 }
 
 @Injectable()
@@ -203,6 +207,240 @@ export class DemoClient implements IDemoClient {
         }
         return _observableOf(null as any);
     }
+
+    getUsers(): Observable<User[]> {
+        let url_ = this.baseUrl + "/api/Demo/GetUsers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetUsers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetUsers(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<User[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<User[]>;
+        }));
+    }
+
+    protected processGetUsers(response: HttpResponseBase): Observable<User[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(User.fromJS(item, _mappings));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getProjects(): Observable<Project[]> {
+        let url_ = this.baseUrl + "/api/Demo/GetProjects";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetProjects(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetProjects(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Project[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Project[]>;
+        }));
+    }
+
+    protected processGetProjects(response: HttpResponseBase): Observable<Project[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(Project.fromJS(item, _mappings));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    addUser(displayName?: string | undefined, login?: string | undefined, projects?: Project[] | undefined, id?: string | undefined): Observable<User> {
+        let url_ = this.baseUrl + "/api/Demo/AddUser?";
+        if (displayName === null)
+            throw new Error("The parameter 'displayName' cannot be null.");
+        else if (displayName !== undefined)
+            url_ += "DisplayName=" + encodeURIComponent("" + displayName) + "&";
+        if (login === null)
+            throw new Error("The parameter 'login' cannot be null.");
+        else if (login !== undefined)
+            url_ += "Login=" + encodeURIComponent("" + login) + "&";
+        if (projects === null)
+            throw new Error("The parameter 'projects' cannot be null.");
+        else if (projects !== undefined)
+            projects && projects.forEach(item => { url_ += "Projects=" + encodeURIComponent("" + item) + "&"; });
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddUser(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddUser(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<User>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<User>;
+        }));
+    }
+
+    protected processAddUser(response: HttpResponseBase): Observable<User> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = User.fromJS(resultData200, _mappings);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    addProject(name?: string | undefined, owner?: string | undefined): Observable<Project> {
+        let url_ = this.baseUrl + "/api/Demo/AddProject?";
+        if (name === null)
+            throw new Error("The parameter 'name' cannot be null.");
+        else if (name !== undefined)
+            url_ += "name=" + encodeURIComponent("" + name) + "&";
+        if (owner === null)
+            throw new Error("The parameter 'owner' cannot be null.");
+        else if (owner !== undefined)
+            url_ += "owner=" + encodeURIComponent("" + owner) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddProject(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddProject(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Project>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Project>;
+        }));
+    }
+
+    protected processAddProject(response: HttpResponseBase): Observable<Project> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = Project.fromJS(resultData200, _mappings);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 export class FileInfo implements IFileInfo {
@@ -245,6 +483,225 @@ export interface IFileInfo {
     fileName: string;
     fileId: string;
     datasetType: string;
+}
+
+export abstract class Entity implements IEntity {
+    id!: string;
+
+    constructor(data?: IEntity) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): Entity | null {
+        data = typeof data === 'object' ? data : {};
+        throw new Error("The abstract class 'Entity' cannot be instantiated.");
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IEntity {
+    id: string;
+}
+
+export class User extends Entity implements IUser {
+    displayName!: string;
+    login!: string;
+    projects!: Project[];
+
+    constructor(data?: IUser) {
+        super(data);
+    }
+
+    init(_data?: any, _mappings?: any) {
+        super.init(_data);
+        if (_data) {
+            this.displayName = _data["displayName"];
+            this.login = _data["login"];
+            if (Array.isArray(_data["projects"])) {
+                this.projects = [] as any;
+                for (let item of _data["projects"])
+                    this.projects!.push(Project.fromJS(item, _mappings));
+            }
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): User | null {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<User>(data, _mappings, User);
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayName"] = this.displayName;
+        data["login"] = this.login;
+        if (Array.isArray(this.projects)) {
+            data["projects"] = [];
+            for (let item of this.projects)
+                data["projects"].push(item ? item.toJSON() : <any>undefined);
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IUser extends IEntity {
+    displayName: string;
+    login: string;
+    projects: Project[];
+}
+
+export class Project extends Entity implements IProject {
+    name!: string;
+    pipelines!: Pipeline[];
+    datasets!: Dataset[];
+
+    constructor(data?: IProject) {
+        super(data);
+    }
+
+    init(_data?: any, _mappings?: any) {
+        super.init(_data);
+        if (_data) {
+            this.name = _data["name"];
+            if (Array.isArray(_data["pipelines"])) {
+                this.pipelines = [] as any;
+                for (let item of _data["pipelines"])
+                    this.pipelines!.push(Pipeline.fromJS(item, _mappings));
+            }
+            if (Array.isArray(_data["datasets"])) {
+                this.datasets = [] as any;
+                for (let item of _data["datasets"])
+                    this.datasets!.push(Dataset.fromJS(item, _mappings));
+            }
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): Project | null {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<Project>(data, _mappings, Project);
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        if (Array.isArray(this.pipelines)) {
+            data["pipelines"] = [];
+            for (let item of this.pipelines)
+                data["pipelines"].push(item ? item.toJSON() : <any>undefined);
+        }
+        if (Array.isArray(this.datasets)) {
+            data["datasets"] = [];
+            for (let item of this.datasets)
+                data["datasets"].push(item ? item.toJSON() : <any>undefined);
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IProject extends IEntity {
+    name: string;
+    pipelines: Pipeline[];
+    datasets: Dataset[];
+}
+
+export class Pipeline extends Entity implements IPipeline {
+    name!: string;
+    description!: string | undefined;
+
+    constructor(data?: IPipeline) {
+        super(data);
+    }
+
+    init(_data?: any, _mappings?: any) {
+        super.init(_data);
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): Pipeline | null {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<Pipeline>(data, _mappings, Pipeline);
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IPipeline extends IEntity {
+    name: string;
+    description: string | undefined;
+}
+
+export class Dataset extends Entity implements IDataset {
+    name!: string;
+    description!: string | undefined;
+    datasetType!: DatasetType;
+    filename!: string;
+
+    constructor(data?: IDataset) {
+        super(data);
+    }
+
+    init(_data?: any, _mappings?: any) {
+        super.init(_data);
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.datasetType = _data["datasetType"];
+            this.filename = _data["filename"];
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): Dataset | null {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<Dataset>(data, _mappings, Dataset);
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["datasetType"] = this.datasetType;
+        data["filename"] = this.filename;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IDataset extends IEntity {
+    name: string;
+    description: string | undefined;
+    datasetType: DatasetType;
+    filename: string;
+}
+
+export enum DatasetType {
+    Unknown = 0,
+    ENVI = 10,
 }
 
 function jsonParse(json: any, reviver?: any) {
