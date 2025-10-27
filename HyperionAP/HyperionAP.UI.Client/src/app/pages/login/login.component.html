@@ -1,0 +1,10 @@
+<div class="login-content">
+    <p class="title">Hyperion AP</p>
+    <form [formGroup]="loginForm" (ngSubmit)="signIn()">
+        <input type="text" name="login" formControlName="login">
+        <br>
+        <input type="text" name="password" formControlName="password">
+        <br>
+        <button type="submit">Enter</button>
+    </form>
+</div>

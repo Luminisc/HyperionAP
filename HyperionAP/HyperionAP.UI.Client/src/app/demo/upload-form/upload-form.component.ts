@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ApiModule } from '../api.module';
-import { DemoClient, FileParameter } from '../api/api.generated';
+import { ApiModule } from '../../api.module';
+import { DemoClient, FileParameter } from '../../api/api.generated';
 
 @Component({
   selector: 'app-upload-form',

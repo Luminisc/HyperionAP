@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { tap } from 'rxjs';
-import { ApiModule } from '../api.module';
-import { DemoClient } from '../api/api.generated';
+import { ApiModule } from '../../api.module';
+import { DemoClient } from '../../api/api.generated';
 
 @Component({
   selector: 'app-results-view',

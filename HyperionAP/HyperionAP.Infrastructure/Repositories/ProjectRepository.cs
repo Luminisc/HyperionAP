@@ -14,5 +14,5 @@ public class ProjectRepository(ApplicationDbContext context) : IProjectRepositor
     public Task DeleteAsync(Project entity) => throw new NotImplementedException();
     public Task<Project> GetAsync(Guid id) => throw new NotImplementedException();
     public Task<Project> UpdateAsync(Project entity) => throw new NotImplementedException();
-    public async Task<IReadOnlyCollection<Project>> GetAllProjectsAsync() => context.Projects.ToList();
+    public async Task<IReadOnlyCollection<Project>> GetAllProjectsAsync() => [.. context.Projects];
 }
