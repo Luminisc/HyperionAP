@@ -5,6 +5,7 @@ import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
     MenubarModule,
     ButtonModule,
     SidebarModule,
-    PanelMenuModule
+    PanelMenuModule,
+    AuthService
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
